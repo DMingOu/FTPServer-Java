@@ -1,5 +1,4 @@
-package cn.edu.gdut.ftp.utils;
-
+package com.odm.ftp.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

@@ -1,26 +1,26 @@
-package cn.edu.gdut.ftp.command.impl;
+package com.odm.ftp.react.command.impl;
+
+
+import com.odm.ftp.bean.User;
+import com.odm.ftp.base.BaseCommand;
+import com.odm.ftp.utils.AccountUtil;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Calendar;
 
-import cn.edu.gdut.ftp.bean.UserInfo;
-import cn.edu.gdut.ftp.command.BaseCommand;
-import cn.edu.gdut.ftp.utils.AccountUtil;
-import sun.nio.cs.ext.GBK;
-
 /**
  * ÎÄ¼þÏÂÔØ
  */
-public class RetrCommand implements BaseCommand{
+public class RetryCommand extends BaseCommand {
 
 
 	@Override
-	public void executeCommand(String datas, BufferedWriter writer,UserInfo userInfo) {
-		File file = new File(AccountUtil.getRootPath()+File.separator+datas);
+	public void execute(String content, BufferedWriter writer, User userInfo) {
+		File file = new File(AccountUtil.getRootPath()+File.separator+content);
 		File rootFile = new File(System.getProperty("user.home")+File.separator);
-		File lastFileName = new File(System.getProperty("user.home")+File.separator+datas);
-		String name = System.getProperty("user.home")+"\\"+datas;
+		File lastFileName = new File(System.getProperty("user.home")+File.separator+content);
+		String name = System.getProperty("user.home")+"\\"+content;
 		if (file.exists()) {
 			for (String item:rootFile.list()){
 				item = System.getProperty("user.home")+"\\"+item;

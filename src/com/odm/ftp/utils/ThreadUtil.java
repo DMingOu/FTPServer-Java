@@ -1,4 +1,4 @@
-package cn.edu.gdut.ftp.utils;
+package com.odm.ftp.utils;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;

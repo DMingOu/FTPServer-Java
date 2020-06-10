@@ -1,19 +1,18 @@
-package cn.edu.gdut.ftp.command.impl;
+package com.odm.ftp.react.command.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import com.odm.ftp.bean.User;
+import com.odm.ftp.base.BaseCommand;
+import com.odm.ftp.utils.AccountUtil;
 
-import cn.edu.gdut.ftp.bean.UserInfo;
-import cn.edu.gdut.ftp.command.BaseCommand;
-import cn.edu.gdut.ftp.utils.AccountUtil;
-
-public class UserCommmand implements BaseCommand{
+public class LoginCommand extends BaseCommand {
 
 	private BufferedReader reader;
 
 	@Override
-	public void executeCommand(String userName, BufferedWriter writer, UserInfo userInfo) {
+	public void execute(String userName, BufferedWriter writer, User userInfo) {
 		if (AccountUtil.hasUsername(userName)) {
 			System.out.println("The account is exist! "+userName);
 			try {

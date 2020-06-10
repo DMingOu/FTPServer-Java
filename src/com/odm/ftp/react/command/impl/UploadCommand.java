@@ -1,30 +1,30 @@
-package cn.edu.gdut.ftp.command.impl;
+package com.odm.ftp.react.command.impl;
 
-import cn.edu.gdut.ftp.bean.UserInfo;
-import cn.edu.gdut.ftp.command.BaseCommand;
-import cn.edu.gdut.ftp.utils.AccountUtil;
 
+import com.odm.ftp.bean.User;
+import com.odm.ftp.base.BaseCommand;
+import com.odm.ftp.utils.AccountUtil;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Calendar;
 
-public class UploadCommand implements BaseCommand{
+public class UploadCommand extends BaseCommand {
 
     /**
      * 文件上传
-     * @param datas
+     * @param content
      * @param writer
      * @param userInfo
      */
     @Override
-    public void executeCommand(String datas, BufferedWriter writer, UserInfo userInfo) {
+    public void execute(String content, BufferedWriter writer, User userInfo) {
         File file = new File(AccountUtil.getRootPath());
         try{
             writer.write("150 Binary data connection\r\n");
             writer.flush();
-            File lastFileName = new File(AccountUtil.getRootPath()+"/"+datas);
-            String name = AccountUtil.getRootPath()+datas;
+            File lastFileName = new File(AccountUtil.getRootPath()+"/"+content);
+            String name = AccountUtil.getRootPath()+content;
             for (String item:file.list()){
                 item = AccountUtil.getRootPath()+item;
                 //获取相同文件名

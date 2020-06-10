@@ -1,11 +1,12 @@
-package cn.edu.gdut.ftp.server;
+package com.odm.ftp.server;
+
+import com.odm.ftp.react.ClientConnection;
+import com.odm.ftp.utils.AccountUtil;
+import com.odm.ftp.utils.ThreadUtil;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import cn.edu.gdut.ftp.utils.AccountUtil;
-import cn.edu.gdut.ftp.utils.ThreadUtil;
 
 /**
  * 初始化ftp服务器，接受客户端的连接

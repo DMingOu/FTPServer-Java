@@ -1,4 +1,4 @@
-package cn.edu.gdut.ftp.utils;
+package com.odm.ftp.utils;
 
 import java.io.File;
 import java.text.DecimalFormat;

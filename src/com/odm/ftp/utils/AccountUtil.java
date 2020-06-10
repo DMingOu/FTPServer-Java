@@ -1,4 +1,4 @@
-package cn.edu.gdut.ftp.utils;
+package com.odm.ftp.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +14,15 @@ public class AccountUtil {
 	
 
 	static String fileName = "server.xml";
-	static String rootDir = "E:\\计算机网络实验\\计算机网络课程设计"+File.separator;//服务器位置，用于存储文件
-	static HashMap<String, String> users = new HashMap<String, String>();
+	static String rootDir = "C:\\Users\\ODM\\Desktop"+File.separator;//服务器位置，用于存储文件
+	static HashMap<String, String> users = new HashMap<>();
 
 	public static void initAccount() {
 		File file = new File(System.getProperty("user.dir")+"/bin/"+fileName);
         SAXBuilder builder = new SAXBuilder();
+        //初始测试密码？
         users.put("admin", "202cb962ac59075b964b07152d234b70");
-
-
+        users.put("test1", "123456");
 	}
 	
 	public static String getRootPath() {

@@ -1,8 +1,8 @@
-package cn.edu.gdut.ftp.bean;
+package com.odm.ftp.bean;
 
 import java.net.Socket;
 
-public class UserInfo {
+public class User {
 	
 	private String password;
 	private String username;
