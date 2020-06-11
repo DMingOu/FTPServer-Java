@@ -3,8 +3,21 @@ package com.odm.ftp.react.command;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.react.command.impl.*;
 
+/**
+ * @ClassName: CommandFactory
+ * @Auther: DMingO
+ * @Date: 2020/6/11 09:15
+ * @Description: 初始化ftp服务器，接受客户端的连接
+ */
 public class CommandFactory {
 
+	/**
+	 * @Author DMingO
+	 * @Description 根据指令名字返回对应的指令
+	 * @Date  2020/6/11 09:40
+	 * @Param [name] 指令具体名字
+	 * @return com.odm.ftp.base.BaseCommand 指令类实例
+	 **/
 	public static BaseCommand parseCommand(String name) {
 		BaseCommand command  = null;
 		switch(name){

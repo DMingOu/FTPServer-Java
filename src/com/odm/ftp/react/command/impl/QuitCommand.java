@@ -1,7 +1,7 @@
 package com.odm.ftp.react.command.impl;
 
 
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 
 import java.io.BufferedWriter;

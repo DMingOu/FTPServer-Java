@@ -1,7 +1,7 @@
 package com.odm.ftp.react.command.impl;
 
 
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountUtil;
 
@@ -37,7 +37,7 @@ public class RetryCommand extends BaseCommand {
 				writer.flush();
 
 				//开始传输
-				Socket socket = new Socket(userInfo.getIp(),userInfo.getPort(),null,20);
+				Socket socket = new Socket(userInfo.getIpAddress(),userInfo.getPort(),null,20);
 				OutputStream outputStream = socket.getOutputStream();
 				FileInputStream inputStream = new FileInputStream(file);
 				int length = 0;
@@ -50,7 +50,7 @@ public class RetryCommand extends BaseCommand {
 				outputStream.close();
 				socket.close();
 				
-				writer.write("220 transfer complete...\r\n");
+				writer.write("返回码  200 transfer complete...\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -58,7 +58,7 @@ public class RetryCommand extends BaseCommand {
 			
 		}else{
 			try {
-				writer.write("220  The file is not exist!\r\n");
+				writer.write("返回码  200  The file is not exist!\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

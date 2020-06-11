@@ -1,6 +1,6 @@
 package com.odm.ftp.react.command.impl;
 
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountUtil;
 import com.odm.ftp.utils.FileUtil;
@@ -25,7 +25,7 @@ public class ListCommand extends BaseCommand {
 		File file = new File(AccountUtil.getRootPath());
 		if (!file.isDirectory()) {
 			try {
-				writer.write("210 The file is not exist\r\n");
+				writer.write("返回码  210 文件不存在\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -51,13 +51,13 @@ public class ListCommand extends BaseCommand {
 				writer.write("150 open ascii mode...\r\n");
 				writer.flush();
 				//与客户端发来的ip和端口号连接,自身端口设置为20
-				Socket socket = new Socket(userInfo.getIp(), userInfo.getPort(),null,20);
+				Socket socket = new Socket(userInfo.getIpAddress(), userInfo.getPort(),null,20);
 				System.out.println(socket.getLocalPort());
 				BufferedWriter portWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"GBK"));
 				portWriter.write(dirList.toString());
 				portWriter.flush();
 				socket.close();
-				writer.write("220 transfer complete...\r\n");
+				writer.write("返回码  返回码  200 传输完毕...\r\n");
 				writer.flush();
 				System.out.println(dirList.toString());
 			} catch (IOException e) {

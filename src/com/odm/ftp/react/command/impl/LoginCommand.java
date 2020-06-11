@@ -3,7 +3,7 @@ package com.odm.ftp.react.command.impl;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountUtil;
 

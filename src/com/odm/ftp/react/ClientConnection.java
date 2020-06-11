@@ -1,12 +1,18 @@
 package com.odm.ftp.react;
 
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.react.command.CommandFactory;
 
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * @ClassName: ClientConnection
+ * @Auther: DMingO
+ * @Date: 2020/6/11 08:45
+ * @Description: 客户端连接交互类
+ */
 public class ClientConnection implements Runnable {
 
 	private Socket socket;
@@ -23,10 +29,10 @@ public class ClientConnection implements Runnable {
 
 			User userInfo = new User();
 			userInfo.setSocket(socket);
-			writer.write("220\r\n");
+			writer.write("返回码  200\r\n");
 			writer.flush();
 			reader.readLine();
-			writer.write("Please enter your account! \r\n");
+			writer.write("请输入你的账号名 \r\n");
 			writer.flush();
 
 			while (true) {
@@ -36,7 +42,7 @@ public class ClientConnection implements Runnable {
 					try {
 						result = reader.readLine();
 					} catch (Exception e) {
-						System.out.println("Client forcibly closed the server! ");
+						System.out.println("客户端强制关闭了与服务器的连接 ");
 					}
 					System.out.println(result);
 					if (result != null && !result.equals("")) {
@@ -50,7 +56,7 @@ public class ClientConnection implements Runnable {
 								command.execute(content[1], writer, userInfo);
 							}
 						} else {
-							writer.write("There is no such command! ");
+							writer.write("当前输入指令不在指令列表中，请输入正确的指令");
 							writer.flush();
 						}
 

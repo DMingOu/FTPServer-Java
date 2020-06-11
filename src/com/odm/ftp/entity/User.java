@@ -1,14 +1,33 @@
-package com.odm.ftp.bean;
-
+package com.odm.ftp.entity;
 import java.net.Socket;
 
+/**
+ * @ClassName: User
+ * @Auther: DMingO
+ * @Date: 2020/6/11 08:55
+ * @Description: 用户实体数据类
+ */
 public class User {
-	
+
+	//用户密码
 	private String password;
+	//用户名
 	private String username;
-	private String ip;
+	//用户的端口
 	private int port;
+
 	private Socket socket;
+	//用户的Ip地址
+	private String ipAddress;
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
 
 	public String getPassword() {
 		return password;
@@ -24,14 +43,6 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
 	}
 
 	public int getPort() {

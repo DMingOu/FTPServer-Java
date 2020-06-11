@@ -9,15 +9,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * 初始化ftp服务器，接受客户端的连接
- * @author
- *
+ * @ClassName: FTPServerMain
+ * @Auther: DMingO
+ * @Date: 2020/6/11 08:50
+ * @Description: 初始化ftp服务器，接受客户端的连接
  */
-public class FtpServer {
+public class FTPServerMain {
 	
 	private ServerSocket serverSocket;
 
-	private FtpServer(int port){
+	private FTPServerMain(int port){
 		try {
 			serverSocket = new ServerSocket(port);
 			System.out.println(serverSocket);
@@ -43,7 +44,7 @@ public class FtpServer {
 	}
 	
 	public static void main(String[] args) {
-		FtpServer ftpServer = new FtpServer(21);
+		FTPServerMain ftpServer = new FTPServerMain(21);
 		ftpServer.listen();
 	}
 	

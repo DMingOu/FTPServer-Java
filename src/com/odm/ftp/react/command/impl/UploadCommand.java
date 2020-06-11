@@ -1,7 +1,7 @@
 package com.odm.ftp.react.command.impl;
 
 
-import com.odm.ftp.bean.User;
+import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountUtil;
 
@@ -39,7 +39,7 @@ public class UploadCommand extends BaseCommand {
             RandomAccessFile inFile = new
                     RandomAccessFile(lastFileName,"rw");
             //开始上传
-            Socket tempSocket = new Socket(userInfo.getIp(),userInfo.getPort());
+            Socket tempSocket = new Socket(userInfo.getIpAddress(),userInfo.getPort());
             InputStream inSocket
                     = tempSocket.getInputStream();
             byte byteBuffer[] = new byte[1024];
