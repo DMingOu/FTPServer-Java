@@ -10,20 +10,26 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Objects;
 
-public class ListCommand extends BaseCommand {
-
-
+/**
+ * @ClassName: DirCommand
+ * @Auther: DMingO
+ * @Date: 2020/6/11 15:45
+ * @Description: 展示文件列表处理指令 LIST
+ */
+public class DirCommand extends BaseCommand {
 	/**
 	 * @Author DMingO
-	 * @Description 列表指令
+	 * @Description 展示列表指令
 	 * @Date  2020/6/11 12:04
-	 * @Param [content, writer, userInfo]
+	 * @Param [content, writer, user]
 	 * @return void
 	 **/
 	@Override
-	public void execute(String content, BufferedWriter writer, User userInfo) {
+	public void execute(String content, BufferedWriter writer, User user) {
 		File file = new File(AccountUtil.getRootPath());
+		//判断文件夹是否存在
 		if (!file.isDirectory()) {
 			try {
 				writer.write("返回码  210 文件不存在\r\n");
@@ -34,17 +40,25 @@ public class ListCommand extends BaseCommand {
 		}else{
 			//拼接文件目录字符串 StringBuffer是线程安全的，而StringBuilder 是线程不安全的
 			StringBuffer dirList = new StringBuffer();
+			dirList.append("以下为远程文件目录的展示： ↓").append("\r\n");
+			dirList.append("序号").append("					")
+					.append("文件名").append("					")
+					.append("文件类型/文件大小").append("					")
+					.append("\r\n");
 			int count = 1;
-			for(String item:file.list()){
-				File itemFile = new File(file+File.separator+item);
+			for(String item: Objects.requireNonNull(file.list())){
+				File itemFile = new File(file + File.separator + item);
 				String size = FileUtil.getFileSize(itemFile);
+				dirList.append(count).append("	").append(item).append("	");
 				if (size.equals("")) {
-					size = "dir";
+					//类型为文件夹
+					dirList.append("    ").append("文件夹");
 				}else{
-					size += "	file";
+					//文件大小 + 文件
+					dirList.append("具体文件").append("     ").append(size);
 				}
-				dirList.append(count+"	"+item+"	"+size);
-				dirList.append("\r\n");
+				dirList.append("\r\n\n");
+				//序号+1
 				count++;
 			}
 			try {
@@ -52,7 +66,7 @@ public class ListCommand extends BaseCommand {
 				writer.write("150 open ascii mode...\r\n");
 				writer.flush();
 				//与客户端发来的ip和端口号连接,自身端口设置为20
-				Socket socket = new Socket(userInfo.getIpAddress(), userInfo.getPort(),null,20);
+				Socket socket = new Socket(user.getIpAddress(), user.getPort(),null,20);
 				System.out.println(socket.getLocalPort());
 				BufferedWriter portWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"GBK"));
 				portWriter.write(dirList.toString());

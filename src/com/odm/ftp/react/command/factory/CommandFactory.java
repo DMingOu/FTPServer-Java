@@ -3,6 +3,9 @@ package com.odm.ftp.react.command.factory;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.react.command.impl.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @ClassName: CommandFactory
  * @Auther: DMingO
@@ -11,6 +14,11 @@ import com.odm.ftp.react.command.impl.*;
  */
 public class CommandFactory {
 
+	public static Set<String> CommandSet = new HashSet<>();
+
+	private CommandFactory(){
+		throw new IllegalStateException("不可初始化CommandFactory实例");
+	}
 	/**
 	 * @Author DMingO
 	 * @Description 根据指令名字返回对应的指令
@@ -30,15 +38,15 @@ public class CommandFactory {
 				command = new PassCommand();
 				break;
 			case "LIST" :
-				command = new ListCommand();
+				command = new DirCommand();
 				break;
-			//存储，上传到FTP服务器
+			//存储，上传到FTP服务器  put指令
 			case "STOR" :
         	    command = new UploadCommand();
         	    break;
-        	//重试操作
+        	//从服务器目录下载文件到客户端当前目录 操作  get指令
 			case "RETR" :
-				command = new RetryCommand();
+				command = new DownloadCommand();
 				break;
 			case "PORT" :
 				command = new PortCommand();
@@ -46,6 +54,9 @@ public class CommandFactory {
 			//退出连接FTP服务器
 			case "QUIT" :
 				command = new QuitCommand();
+				break;
+			//创建文件夹 mkdir file
+			case "XMKD" :
 				break;
 			default:
 				break;

@@ -27,8 +27,8 @@ public class ClientConnection implements Runnable {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "GBK"));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
 
-			User userInfo = new User();
-			userInfo.setSocket(socket);
+			User user = new User();
+			user.setSocket(socket);
 			writer.write("返回码  200\r\n");
 			writer.flush();
 			reader.readLine();
@@ -36,7 +36,7 @@ public class ClientConnection implements Runnable {
 			writer.flush();
 
 			while (true) {
-				if (!socket.isClosed()) {
+				if (! socket.isClosed()) {
 					String result = null;
 					try {
 						result = reader.readLine();
@@ -44,29 +44,24 @@ public class ClientConnection implements Runnable {
 						System.out.println("客户端强制关闭了与服务器的连接 ");
 					}
 					System.out.println("接收到客户端的信息  " + result);
+
 					if (result != null && !result.equals("")) {
 						String[] content = result.split(" ");
 						System.out.println("当前指令:  " + content[0] );
-//						if(content[0].equals("PORT")){
-//							content[0] = "LIST";
-//							System.out.println("PORT 转换为 LIST 指令");
-//						}
 						BaseCommand command = CommandFactory.parseCommand(content[0]);
 						if (command != null) {
-							//
+							//执行对应的指令操作
 							if (content.length == 1) {
-								command.execute("", writer, userInfo);
+								command.execute("", writer, user);
 							} else {
-								command.execute(content[1], writer, userInfo);
+								command.execute(content[1], writer, user);
 							}
 						} else {
-							writer.write("当前输入指令不在指令列表中，请输入正确的指令");
+							writer.write("500 Wrong Command！");
 							writer.flush();
 						}
-
-
 					} else {
-						//
+						//关闭资源
 						reader.close();
 						writer.close();
 						socket.close();
@@ -74,7 +69,7 @@ public class ClientConnection implements Runnable {
 					}
 
 				} else {
-
+					//socket关闭则连接失效，退出循环
 					break;
 				}
 			}

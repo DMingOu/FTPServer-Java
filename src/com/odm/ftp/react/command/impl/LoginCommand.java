@@ -7,18 +7,25 @@ import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountUtil;
 
+/**
+ * @Author DMingO
+ * @Description 处理登录指令  USER
+ * @Date  2020/6/11 15:07
+ * @Param
+ * @return
+ **/
 public class LoginCommand extends BaseCommand {
 
 	private BufferedReader reader;
 
 	@Override
-	public void execute(String userName, BufferedWriter writer, User userInfo) {
+	public void execute(String userName, BufferedWriter writer, User user) {
 		if (AccountUtil.hasUsername(userName)) {
 			System.out.println("此账号已存在记录 : " + userName);
 			try {
 				writer.write("331 , Please continue to enter your password\r\n");
 				writer.flush();
-				userInfo.setUsername(userName);
+				user.setUsername(userName);
 				//reader.readLine();
 			} catch (IOException e) {
 				e.printStackTrace();

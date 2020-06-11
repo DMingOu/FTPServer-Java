@@ -16,9 +16,9 @@ public abstract class BaseCommand {
 	 * @Author DMingO
 	 * @Description  执行指令的具体操作
 	 * @Date  2020/6/11
-	 * @Param [content, writer, userInfo]
+	 * @Param [content, writer, user]
 	 * @return void
 	 **/
-	public abstract void execute(String content, BufferedWriter writer, User userInfo);
+	public abstract void execute(String content, BufferedWriter writer, User user);
 
 }
