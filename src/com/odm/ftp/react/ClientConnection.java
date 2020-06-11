@@ -2,7 +2,7 @@ package com.odm.ftp.react;
 
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
-import com.odm.ftp.react.command.CommandFactory;
+import com.odm.ftp.react.command.factory.CommandFactory;
 
 import java.io.*;
 import java.net.Socket;
@@ -36,7 +36,6 @@ public class ClientConnection implements Runnable {
 			writer.flush();
 
 			while (true) {
-
 				if (!socket.isClosed()) {
 					String result = null;
 					try {
@@ -44,9 +43,14 @@ public class ClientConnection implements Runnable {
 					} catch (Exception e) {
 						System.out.println("客户端强制关闭了与服务器的连接 ");
 					}
-					System.out.println(result);
+					System.out.println("接收到客户端的信息  " + result);
 					if (result != null && !result.equals("")) {
 						String[] content = result.split(" ");
+						System.out.println("当前指令:  " + content[0] );
+//						if(content[0].equals("PORT")){
+//							content[0] = "LIST";
+//							System.out.println("PORT 转换为 LIST 指令");
+//						}
 						BaseCommand command = CommandFactory.parseCommand(content[0]);
 						if (command != null) {
 							//

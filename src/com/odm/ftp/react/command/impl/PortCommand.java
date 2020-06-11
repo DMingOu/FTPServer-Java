@@ -10,11 +10,12 @@ import java.io.IOException;
 public class PortCommand extends BaseCommand {
 
 	/**
-	 * 端口号、ip处理
-	 * @param content
-	 * @param writer
-	 * @param userInfo
-	 */
+	 * @Author DMingO
+	 * @Description 端口号、ip处理
+	 * @Date  2020/6/11 9:58
+	 * @Param [content, writer, userInfo]
+	 * @return void
+	 **/
 	@Override
 	public void execute(String content, BufferedWriter writer, User userInfo) {
 		String[] result = content.split(",");
@@ -23,7 +24,8 @@ public class PortCommand extends BaseCommand {
 		int port = Integer.parseInt(result[4])*256+Integer.parseInt(result[5]);
 		System.out.println("port:"+port);
 		try {
-			writer.write("返回码 200 ，允许 Ip 和 端口通过\r\n");
+			//此处写入必须为200 Accept the id and port 或 200，否则会导致无法继续接受客户端的信息
+			writer.write("200 Accept the id and port\r\n");
 			writer.flush();
 			userInfo.setIpAddress(ip);
 			userInfo.setPort(port);

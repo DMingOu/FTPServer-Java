@@ -1,4 +1,4 @@
-package com.odm.ftp.react.command;
+package com.odm.ftp.react.command.factory;
 
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.react.command.impl.*;

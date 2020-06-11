@@ -30,11 +30,7 @@ public class AccountUtil {
 	}
 	
 	public static boolean hasUsername(String username) {
-		if (users.get(username)!=null) {
-			return true;
-		}else{
-			return false;
-		}
+		return users.get(username) != null;
 	}
 
 	public static String getPassword(String userName) {

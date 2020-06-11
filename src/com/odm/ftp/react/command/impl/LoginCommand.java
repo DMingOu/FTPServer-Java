@@ -14,20 +14,20 @@ public class LoginCommand extends BaseCommand {
 	@Override
 	public void execute(String userName, BufferedWriter writer, User userInfo) {
 		if (AccountUtil.hasUsername(userName)) {
-			System.out.println("The account is exist! "+userName);
+			System.out.println("此账号已存在记录 : " + userName);
 			try {
-				writer.write("331\r\n");
+				writer.write("331 , Please continue to enter your password\r\n");
 				writer.flush();
 				userInfo.setUsername(userName);
 				//reader.readLine();
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}else{
-			System.out.println("The account is not exist! "+userName);
+			System.out.println("此账号未存在记录 ： "+userName);
 			try {
-				writer.write("501\r\n");
+				//此用户未注册，返回501
+				writer.write("501\n\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

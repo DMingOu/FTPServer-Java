@@ -15,11 +15,12 @@ public class ListCommand extends BaseCommand {
 
 
 	/**
-	 * dir功能实现
-	 * @param content
-	 * @param writer
-	 * @param userInfo
-	 */
+	 * @Author DMingO
+	 * @Description 列表指令
+	 * @Date  2020/6/11 12:04
+	 * @Param [content, writer, userInfo]
+	 * @return void
+	 **/
 	@Override
 	public void execute(String content, BufferedWriter writer, User userInfo) {
 		File file = new File(AccountUtil.getRootPath());
@@ -31,13 +32,13 @@ public class ListCommand extends BaseCommand {
 				e.printStackTrace();
 			}
 		}else{
-			//拼接文件目录字符串
+			//拼接文件目录字符串 StringBuffer是线程安全的，而StringBuilder 是线程不安全的
 			StringBuffer dirList = new StringBuffer();
 			int count = 1;
 			for(String item:file.list()){
 				File itemFile = new File(file+File.separator+item);
 				String size = FileUtil.getFileSize(itemFile);
-				if (size.equals("")||size==null) {
+				if (size.equals("")) {
 					size = "dir";
 				}else{
 					size += "	file";
@@ -57,7 +58,7 @@ public class ListCommand extends BaseCommand {
 				portWriter.write(dirList.toString());
 				portWriter.flush();
 				socket.close();
-				writer.write("返回码  返回码  200 传输完毕...\r\n");
+				writer.write("返回码  200 传输完毕...\r\n");
 				writer.flush();
 				System.out.println(dirList.toString());
 			} catch (IOException e) {
