@@ -3,12 +3,13 @@ package com.odm.ftp.react.command.impl;
 
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
-import com.odm.ftp.utils.AccountUtil;
+import com.odm.ftp.utils.AccountManager;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Calendar;
 import java.util.Objects;
+
 
 public class UploadCommand extends BaseCommand {
 
@@ -21,18 +22,18 @@ public class UploadCommand extends BaseCommand {
      **/
     @Override
     public void execute(String content, BufferedWriter writer, User user) {
-        File file = new File(AccountUtil.getRootPath());
+        File file = new File(AccountManager.getRootPath());
         try{
             writer.write("150 Binary data connection\r\n");
             writer.flush();
-            File oldFileName = new File(AccountUtil.getRootPath()+"/"+content);
-            String name = AccountUtil.getRootPath()+content;
+            File oldFileName = new File(AccountManager.getRootPath()+"/"+content);
+            String name = AccountManager.getRootPath()+content;
             for (String item: Objects.requireNonNull(file.list())){
-                item = AccountUtil.getRootPath()+item;
+                item = AccountManager.getRootPath()+item;
                 //获取相同文件名
                 if (item.equals(name)){
                     //将文件名改成时间戳
-                    File newFileName = new File(AccountUtil.getRootPath()+ Calendar.getInstance().getTimeInMillis()+"."+item.substring(item.lastIndexOf(".")+1));
+                    File newFileName = new File(AccountManager.getRootPath()+ Calendar.getInstance().getTimeInMillis()+"."+item.substring(item.lastIndexOf(".")+1));
                     if(oldFileName.renameTo(newFileName)) {
                         System.out.println(oldFileName + "successfully renameTo  " + newFileName);
                     }else {

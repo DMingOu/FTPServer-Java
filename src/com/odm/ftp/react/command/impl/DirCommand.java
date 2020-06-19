@@ -2,7 +2,7 @@ package com.odm.ftp.react.command.impl;
 
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
-import com.odm.ftp.utils.AccountUtil;
+import com.odm.ftp.utils.AccountManager;
 import com.odm.ftp.utils.FileUtil;
 
 import java.io.BufferedWriter;
@@ -19,6 +19,7 @@ import java.util.Objects;
  * @Description: 展示文件列表处理指令 LIST
  */
 public class DirCommand extends BaseCommand {
+
 	/**
 	 * @Author DMingO
 	 * @Description 展示列表指令
@@ -28,11 +29,11 @@ public class DirCommand extends BaseCommand {
 	 **/
 	@Override
 	public void execute(String content, BufferedWriter writer, User user) {
-		File file = new File(AccountUtil.getRootPath());
+		File file = new File(AccountManager.getRootPath());
 		//判断文件夹是否存在
-		if (!file.isDirectory()) {
+		if (! file.isDirectory()) {
 			try {
-				writer.write("返回码  210 文件不存在\r\n");
+				writer.write("210 文件夹不存在\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -45,11 +46,12 @@ public class DirCommand extends BaseCommand {
 					.append("文件名").append("					")
 					.append("文件类型/文件大小").append("					")
 					.append("\r\n");
-			int count = 1;
+			//文件序号
+			int index = 1;
 			for(String item: Objects.requireNonNull(file.list())){
 				File itemFile = new File(file + File.separator + item);
 				String size = FileUtil.getFileSize(itemFile);
-				dirList.append(count).append("	").append(item).append("	");
+				dirList.append(index).append("	").append(item).append("	");
 				if (size.equals("")) {
 					//类型为文件夹
 					dirList.append("    ").append("文件夹");
@@ -59,7 +61,7 @@ public class DirCommand extends BaseCommand {
 				}
 				dirList.append("\r\n\n");
 				//序号+1
-				count++;
+				index++;
 			}
 			try {
 				//告知客户端：服务器向另外一个端口发送数据

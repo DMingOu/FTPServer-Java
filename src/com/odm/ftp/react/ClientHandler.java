@@ -3,21 +3,22 @@ package com.odm.ftp.react;
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.react.command.factory.CommandFactory;
+import com.odm.ftp.utils.LogUtil;
 
 import java.io.*;
 import java.net.Socket;
 
 /**
- * @ClassName: ClientConnection
+ * @ClassName: ClientHandler
  * @Auther: DMingO
  * @Date: 2020/6/11 08:45
  * @Description: 客户端连接交互类
  */
-public class ClientConnection implements Runnable {
+public class ClientHandler implements Runnable {
 
 	private Socket socket;
 
-	public ClientConnection(Socket socket) {
+	public ClientHandler(Socket socket) {
 		this.socket = socket;
 	}
 
@@ -47,8 +48,8 @@ public class ClientConnection implements Runnable {
 
 					if (result != null && !result.equals("")) {
 						String[] content = result.split(" ");
-						System.out.println("当前指令:  " + content[0] );
-						BaseCommand command = CommandFactory.parseCommand(content[0]);
+						LogUtil.info("当前指令:  " + content[0] );
+						BaseCommand command = CommandFactory.handleCommand(content[0]);
 						if (command != null) {
 							//执行对应的指令操作
 							if (content.length == 1) {
@@ -57,6 +58,7 @@ public class ClientConnection implements Runnable {
 								command.execute(content[1], writer, user);
 							}
 						} else {
+							LogUtil.error("用户登录密码错误 500 ");
 							writer.write("500 Wrong Command！");
 							writer.flush();
 						}
@@ -70,11 +72,13 @@ public class ClientConnection implements Runnable {
 
 				} else {
 					//socket关闭则连接失效，退出循环
+					LogUtil.warn("socket已关闭，连接关闭");
 					break;
 				}
 			}
 
 		} catch (IOException e) {
+			LogUtil.error(e.getCause());
 			e.printStackTrace();
 		}
 

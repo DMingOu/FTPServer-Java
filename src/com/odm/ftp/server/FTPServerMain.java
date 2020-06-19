@@ -1,7 +1,7 @@
 package com.odm.ftp.server;
 
-import com.odm.ftp.react.ClientConnection;
-import com.odm.ftp.utils.AccountUtil;
+import com.odm.ftp.react.ClientHandler;
+import com.odm.ftp.utils.AccountManager;
 import com.odm.ftp.utils.ThreadUtil;
 
 import java.io.IOException;
@@ -27,23 +27,31 @@ public class FTPServerMain {
 			e.printStackTrace();
 		}
 		//此方法为初始化可以接入的帐号密码
-		AccountUtil.initAccount();
+		AccountManager.initAccount();
 	}
 	
 	private void listen() {
 		try {
-			while(true){
-				Socket socket = serverSocket.accept();
-				ClientConnection connection = new ClientConnection(socket);
-				ThreadUtil.getThreadPool().execute(connection);
-			}
+			System.out.println("-------------------Start Listen-------------------");
+			Socket socket = serverSocket.accept();
+			ClientHandler connection = new ClientHandler(socket);
+			ThreadUtil.getThreadPool().execute(connection);
 		} catch (IOException e) {
-    			e.printStackTrace();
+		    e.printStackTrace();
 		}
 
+
 	}
-	
+
+	/*
+	 * @Author DMingO
+	 * @Description 启动 FTP 服务端
+	 * @Date  2020/6/19 17:17
+	 * @Param [args]
+	 * @return void
+	 **/
 	public static void main(String[] args) {
+		//默认端口为 21 ，若出现开启失败，可能是系统地方已经占用了21端口
 		FTPServerMain ftpServer = new FTPServerMain(21);
 		ftpServer.listen();
 	}

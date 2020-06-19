@@ -1,24 +1,26 @@
 package com.odm.ftp.react.command.impl;
-
-
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
-import com.odm.ftp.utils.AccountUtil;
+import com.odm.ftp.utils.AccountManager;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Calendar;
 import java.util.Objects;
 
+
 /**
- * 文件下载
+ * @ClassName: DownloadCommand
+ * @Auther: DMingO
+ * @Date: 2020/6/11 15:48
+ * @Description: 处理用户下载文件指令 RETR
  */
 public class DownloadCommand extends BaseCommand {
 
 
 	@Override
 	public void execute(String content, BufferedWriter writer, User user) {
-		File file = new File(AccountUtil.getRootPath()+File.separator+content);
+		File file = new File(AccountManager.getRootPath()+File.separator+content);
 		File rootFile = new File(System.getProperty("user.home")+File.separator);
 		File oldFileName = new File(System.getProperty("user.home")+File.separator+content);
 		String name = System.getProperty("user.home")+"\\"+content;

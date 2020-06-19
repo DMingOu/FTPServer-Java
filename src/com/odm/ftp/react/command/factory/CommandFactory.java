@@ -19,6 +19,8 @@ public class CommandFactory {
 	private CommandFactory(){
 		throw new IllegalStateException("不可初始化CommandFactory实例");
 	}
+
+
 	/**
 	 * @Author DMingO
 	 * @Description 根据指令名字返回对应的指令
@@ -26,7 +28,7 @@ public class CommandFactory {
 	 * @Param [name] 指令具体名字
 	 * @return com.odm.ftp.base.BaseCommand 指令类实例
 	 **/
-	public static BaseCommand parseCommand(String name) {
+	public static BaseCommand handleCommand(String name) {
 		BaseCommand command  = null;
 		switch(name){
 			//处理用户登录状态
@@ -55,7 +57,7 @@ public class CommandFactory {
 			case "QUIT" :
 				command = new QuitCommand();
 				break;
-			//创建文件夹 mkdir file
+			//在服务器目录上创建文件夹 mkdir file
 			case "XMKD" :
 				break;
 			default:
