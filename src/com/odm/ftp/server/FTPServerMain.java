@@ -1,5 +1,6 @@
 package com.odm.ftp.server;
 
+import com.odm.ftp.base.BaseServer;
 import com.odm.ftp.react.ClientHandler;
 import com.odm.ftp.utils.AccountManager;
 import com.odm.ftp.utils.ThreadUtil;
@@ -14,7 +15,7 @@ import java.net.Socket;
  * @Date: 2020/6/11 08:50
  * @Description: 初始化ftp服务器，接受客户端的连接
  */
-public class FTPServerMain {
+public class FTPServerMain extends BaseServer {
 	
 	private ServerSocket serverSocket;
 
@@ -29,18 +30,17 @@ public class FTPServerMain {
 		//此方法为初始化可以接入的帐号密码
 		AccountManager.initAccount();
 	}
-	
-	private void listen() {
-		try {
-			System.out.println("-------------------Start Listen-------------------");
-			Socket socket = serverSocket.accept();
-			ClientHandler connection = new ClientHandler(socket);
-			ThreadUtil.getThreadPool().execute(connection);
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
 
-
+	@Override
+	protected void listen() {
+			try {
+				System.out.println("-------------------Start Listen-------------------");
+				Socket socket = serverSocket.accept();
+				ClientHandler connection = new ClientHandler(socket);
+				ThreadUtil.getThreadPool().execute(connection);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	/*

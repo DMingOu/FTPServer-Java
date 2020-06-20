@@ -20,26 +20,6 @@ public class LoginCommand extends BaseCommand {
 
 	@Override
 	public void execute(String userName, BufferedWriter writer, User user) {
-/*		if (AccountUtil.hasUsername(userName)) {
-			System.out.println("此账号已存在记录 : " + userName);
-			try {
-				writer.write("331 , Please continue to enter your password\r\n");
-				writer.flush();
-				user.setUsername(userName);
-				//reader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else{
-			LogUtil.warn("此账号未存在记录 ： "+userName);
-			try {
-				//此用户未注册，返回501
-				writer.write("501\n\r\n");
-				writer.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/
 
 		//如果 用户名 有记录的说明是登录操作，需要验证密码
 		if(AccountManager.hasUsername(userName)){

@@ -30,10 +30,9 @@ public class PassCommand extends BaseCommand {
 			return;
 		}
 		//根据用户名判断此用户为老用户 / 新用户
-		//新用户，将密码转换 MD5 后，存储进来
 		//老用户，将密码转换 MD5 后，和记录中做对比
 		if(AccountManager.hasUsername(user.getUsername())){
-			String passWord2Md5 = Md5Util.encoder(passWord);
+			String passWord2Md5 = Md5Util.encode(passWord);
 			System.out.println("密码  "+passWord + ",对应md5密码： "+passWord2Md5);
 
 			//密码与记录相符，密码正确，登录成功
@@ -60,8 +59,9 @@ public class PassCommand extends BaseCommand {
 			}
 		}
 
+		//新用户，将密码转换 MD5 后，存储进来
 		if(! AccountManager.hasUsername(user.getUsername())){
-			String passWord2Md5 = Md5Util.encoder(passWord);
+			String passWord2Md5 = Md5Util.encode(passWord);
 			//将新用户,用户民和密码(MD5)存入账户管理类
 			if(AccountManager.replenishAccount(user.getUsername() , passWord2Md5)){
 				LogUtil.info("用户 "+user.getUsername() + "  注册通过");
@@ -77,32 +77,6 @@ public class PassCommand extends BaseCommand {
 			}
 
 		}
-
-
-//			String passWord2Md5 = Md5Util.encoder(passWord);
-//		System.out.println("passWord2Md5 :  " + passWord2Md5);
-//		System.out.println("util 存储密码 : " + AccountUtil.getPassword(user.getUsername()));
-//
-//		if (passWord2Md5.equals(AccountUtil.getPassword(user.getUsername())  ) ||
-//			(AccountUtil.hasUsername(user.getUsername()) && passWord.equals(AccountUtil.getPassword(user.getUsername())))
-//		) {
-//			System.out.println("密码正确"+passWord + ",对应md5密码："+passWord2Md5);
-//			try {
-//				//230前面不能有其他字符否则会触发系统消息 登录失败。
-//				writer.write("230 , Your passWord is passed!Welcome to use FTP-Server!\r\n");
-//				writer.flush();
-//				user.setPassword(passWord2Md5);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}else{
-//			try {
-//				writer.write("530 Your passWord isn't passed , please input the correct password !\r\n");
-//				writer.flush();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
 	}
 
 }

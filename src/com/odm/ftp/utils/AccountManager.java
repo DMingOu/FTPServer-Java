@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * @ClassName: AccountManager
+ * @Auther: DMingO
+ * @Date: 2020/6/19 18:50
+ * @Description: ’Àªßπ‹¿Ì¿‡
+ */
 public class AccountManager {
 	
 
@@ -15,8 +22,10 @@ public class AccountManager {
 
 	public static void initAccount() {
 		File file = new File(System.getProperty("user.dir")+"/bin/"+fileName);
-		//≥ı º≤‚ ‘√‹¬Î£ø
+		//≥ı º≤‚ ‘√‹¬Î
+		//admin 123
         accountMap.put("admin", "202cb962ac59075b964b07152d234b70");
+        //test1 123456
         accountMap.put("test1", "e10adc3949ba59abbe56e057f20f883e");
 	}
 	
