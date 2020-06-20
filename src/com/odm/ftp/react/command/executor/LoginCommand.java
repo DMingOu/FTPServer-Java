@@ -1,4 +1,4 @@
-package com.odm.ftp.react.command.impl;
+package com.odm.ftp.react.command.executor;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

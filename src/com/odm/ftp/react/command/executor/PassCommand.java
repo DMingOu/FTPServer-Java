@@ -1,4 +1,4 @@
-package com.odm.ftp.react.command.impl;
+package com.odm.ftp.react.command.executor;
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountManager;
@@ -33,8 +33,6 @@ public class PassCommand extends BaseCommand {
 		//老用户，将密码转换 MD5 后，和记录中做对比
 		if(AccountManager.hasUsername(user.getUsername())){
 			String passWord2Md5 = Md5Util.encode(passWord);
-			System.out.println("密码  "+passWord + ",对应md5密码： "+passWord2Md5);
-
 			//密码与记录相符，密码正确，登录成功
 			if(passWord2Md5.equals(AccountManager.getPassword(user.getUsername()))){
 				LogUtil.info("用户 "+user.getUsername() + "  密码正确,登录成功");

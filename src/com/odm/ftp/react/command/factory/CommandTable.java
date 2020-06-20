@@ -1,4 +1,4 @@
-package com.odm.ftp.react;
+package com.odm.ftp.react.command.factory;
 
 /**
  * @ClassName: CommandTable

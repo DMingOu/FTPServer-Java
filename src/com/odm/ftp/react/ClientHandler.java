@@ -58,7 +58,7 @@ public class ClientHandler implements Runnable {
 								command.execute(content[1], writer, user);
 							}
 						} else {
-							LogUtil.error("ÓÃ»§µÇÂ¼ÃÜÂë´íÎó 500 ");
+							LogUtil.error("Ö¸Áî´íÎó 500 ");
 							writer.write("500 Wrong Command£¡");
 							writer.flush();
 						}

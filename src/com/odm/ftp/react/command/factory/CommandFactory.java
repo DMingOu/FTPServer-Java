@@ -1,14 +1,10 @@
 package com.odm.ftp.react.command.factory;
 
 import com.odm.ftp.base.BaseCommand;
-import com.odm.ftp.react.CommandTable;
-import com.odm.ftp.react.command.impl.*;
-import com.odm.ftp.utils.LogUtil;
+import com.odm.ftp.react.command.executor.*;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @ClassName: CommandFactory
@@ -63,15 +59,17 @@ public class CommandFactory {
 				case CommandTable.DOWNLOAD :
 					command = new DownloadCommand();
 					break;
+				//在服务器目录上创建文件夹 mkdir file
+				case CommandTable.MAKE_DIR :
+					command = new CreateNewFileCommand();
+					break;
+				default:
+					break;
 				//退出连接FTP服务器
 				case CommandTable.QUIT :
 					command = new QuitCommand();
 					break;
-				//在服务器目录上创建文件夹 mkdir file
-				case CommandTable.MAKE_DIR :
-					break;
-				default:
-					break;
+
 			}
 			//将初次创建的command存储，给下一次使用
 			if(command != null){

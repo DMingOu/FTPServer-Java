@@ -3,6 +3,7 @@ package com.odm.ftp.server;
 import com.odm.ftp.base.BaseServer;
 import com.odm.ftp.react.ClientHandler;
 import com.odm.ftp.utils.AccountManager;
+import com.odm.ftp.utils.LogUtil;
 import com.odm.ftp.utils.ThreadUtil;
 
 import java.io.IOException;
@@ -22,8 +23,7 @@ public class FTPServerMain extends BaseServer {
 	private FTPServerMain(int port){
 		try {
 			serverSocket = new ServerSocket(port);
-			System.out.println(serverSocket);
-
+			LogUtil.info(serverSocket);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +34,7 @@ public class FTPServerMain extends BaseServer {
 	@Override
 	protected void listen() {
 			try {
-				System.out.println("-------------------Start Listen-------------------");
+				System.out.println("----------------------Start Listen---------------------");
 				Socket socket = serverSocket.accept();
 				ClientHandler connection = new ClientHandler(socket);
 				ThreadUtil.getThreadPool().execute(connection);

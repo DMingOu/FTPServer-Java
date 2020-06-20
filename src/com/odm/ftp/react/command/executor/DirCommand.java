@@ -1,4 +1,4 @@
-package com.odm.ftp.react.command.impl;
+package com.odm.ftp.react.command.executor;
 
 import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
