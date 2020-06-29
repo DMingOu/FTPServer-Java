@@ -18,8 +18,19 @@ import java.io.IOException;
  */
 public class CreateNewFileCommand extends BaseCommand {
 
+    private CreateNewFileCommand() {
+    }
+    //静态内部类创建静态的外部类实例
+    private static class CreateNewFileCommandInstance {
+        private static final CreateNewFileCommand INSTANCE = new CreateNewFileCommand();
+    }
+
+    public static CreateNewFileCommand getInstance(){
+        return CreateNewFileCommandInstance.INSTANCE;
+    }
+
     @Override
-    public void execute(String content, BufferedWriter writer, User user) {
+    public synchronized void execute(String content, BufferedWriter writer, User user) {
         LogUtil.info("创建新文件夹  " + content);
         try {
             //操作新建文件夹

@@ -12,14 +12,25 @@ import java.util.Objects;
 /**
  * @ClassName: DownloadCommand
  * @Auther: DMingO
- * @Date: 2020/6/11 15:48
+ * @Date: 2020/6/11 15:48md
  * @Description: 处理用户下载文件指令 RETR
  */
 public class DownloadCommand extends BaseCommand {
 
+	private DownloadCommand() {
+	}
+	//静态内部类创建静态的外部类实例
+	private static class DownloadCommandInstance {
+		private static final DownloadCommand INSTANCE = new DownloadCommand();
+	}
+
+	public static DownloadCommand getInstance(){
+		return DownloadCommandInstance.INSTANCE;
+	}
+
 
 	@Override
-	public void execute(String content, BufferedWriter writer, User user) {
+	public synchronized void execute(String content, BufferedWriter writer, User user) {
 		File file = new File(AccountManager.getRootPath()+File.separator+content);
 		File rootFile = new File(System.getProperty("user.home")+File.separator);
 		File oldFileName = new File(System.getProperty("user.home")+File.separator+content);
@@ -41,7 +52,6 @@ public class DownloadCommand extends BaseCommand {
 			try {
 				writer.write("150 open ascii mode...\r\n");
 				writer.flush();
-
 				//开始传输
 				Socket socket = new Socket(user.getIpAddress(),user.getPort(),null,20);
 				OutputStream outputStream = socket.getOutputStream();
@@ -56,7 +66,7 @@ public class DownloadCommand extends BaseCommand {
 				outputStream.close();
 				socket.close();
 				
-				writer.write("返回码  200 transfer complete...\r\n");
+				writer.write("200 transfer complete...\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -64,7 +74,7 @@ public class DownloadCommand extends BaseCommand {
 			
 		}else{
 			try {
-				writer.write("返回码  200  The file is not exist!\r\n");
+				writer.write("550  The file is not exist!\r\n");
 				writer.flush();
 			} catch (IOException e) {
 				e.printStackTrace();

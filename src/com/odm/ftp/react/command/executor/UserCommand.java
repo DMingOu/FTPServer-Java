@@ -14,12 +14,12 @@ import com.odm.ftp.utils.LogUtil;
  * @Date: 2020/6/11 15:48
  * @Description: 处理用户登录指令 USER
  */
-public class LoginCommand extends BaseCommand {
+public class UserCommand extends BaseCommand {
 
 	private BufferedReader reader;
 
 	@Override
-	public void execute(String userName, BufferedWriter writer, User user) {
+	public synchronized void execute(String userName, BufferedWriter writer, User user) {
 
 		//如果 用户名 有记录的说明是登录操作，需要验证密码
 		if(AccountManager.hasUsername(userName)){

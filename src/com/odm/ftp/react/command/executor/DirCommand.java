@@ -4,6 +4,7 @@ import com.odm.ftp.entity.User;
 import com.odm.ftp.base.BaseCommand;
 import com.odm.ftp.utils.AccountManager;
 import com.odm.ftp.utils.FileUtil;
+import com.odm.ftp.utils.LogUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -74,10 +75,11 @@ public class DirCommand extends BaseCommand {
 				portWriter.write(dirList.toString());
 				portWriter.flush();
 				socket.close();
-				writer.write("返回码  200 传输完毕...\r\n");
+				writer.write("200 传输完毕...\r\n");
 				writer.flush();
 				System.out.println(dirList.toString());
 			} catch (IOException e) {
+				LogUtil.error(e.getCause());
 				e.printStackTrace();
 			}
 

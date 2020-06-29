@@ -37,6 +37,7 @@ public class ClientHandler implements Runnable {
 			writer.flush();
 
 			while (true) {
+
 				if (! socket.isClosed()) {
 					String result = null;
 					try {
@@ -45,29 +46,28 @@ public class ClientHandler implements Runnable {
 						System.out.println("客户端强制关闭了与服务器的连接 ");
 					}
 					System.out.println("接收到客户端的信息  " + result);
-
 					if (result != null && !result.equals("")) {
-						String[] content = result.split(" ");
-						LogUtil.info("当前指令:  " + content[0] );
-						BaseCommand command = CommandFactory.handleCommand(content[0]);
-						if (command != null) {
-							//执行对应的指令操作
-							if (content.length == 1) {
-								command.execute("", writer, user);
+							String[] content = result.split(" ");
+							LogUtil.info("当前指令:  " + content[0] );
+							BaseCommand command = CommandFactory.handleCommand(content[0]);
+							if (command != null) {
+								//执行对应的指令操作
+								if (content.length == 1) {
+									command.execute("", writer, user);
+								} else {
+									command.execute(content[1], writer, user);
+								}
 							} else {
-								command.execute(content[1], writer, user);
+								LogUtil.error("指令错误 500 ");
+								writer.write("500 Wrong Command！\r\n");
+								writer.flush();
 							}
-						} else {
-							LogUtil.error("指令错误 500 ");
-							writer.write("500 Wrong Command！");
-							writer.flush();
-						}
 					} else {
-						//关闭资源
-						reader.close();
-						writer.close();
-						socket.close();
-						break;
+							//关闭资源
+							reader.close();
+							writer.close();
+							socket.close();
+							break;
 					}
 
 				} else {

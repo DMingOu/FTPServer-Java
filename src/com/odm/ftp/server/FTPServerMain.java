@@ -31,18 +31,6 @@ public class FTPServerMain extends BaseServer {
 		AccountManager.initAccount();
 	}
 
-	@Override
-	protected void listen() {
-			try {
-				System.out.println("----------------------Start Listen---------------------");
-				Socket socket = serverSocket.accept();
-				ClientHandler connection = new ClientHandler(socket);
-				ThreadUtil.getThreadPool().execute(connection);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
-
 	/*
 	 * @Author DMingO
 	 * @Description 启动 FTP 服务端
@@ -55,5 +43,26 @@ public class FTPServerMain extends BaseServer {
 		FTPServerMain ftpServer = new FTPServerMain(21);
 		ftpServer.listen();
 	}
+
+	@Override
+	protected void listen() {
+        System.out.println("----------------------Start Listen---------------------");
+		int clientIndex  = 1;
+		//循环接收多个客户端的连接请求
+		while (true){
+			Socket socket = null;
+			try {
+				socket = serverSocket.accept();
+				System.out.println("！！！第   " + clientIndex + "  个客户端尝试连接！！！");
+				ClientHandler connection = new ClientHandler(socket);
+				ThreadUtil.getThreadPool().execute(connection);
+				clientIndex++;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
 	
 }

@@ -52,10 +52,9 @@ public class AccountManager {
 		if(hasUsername(userName)){
 			return false;
 		}
-		if(accountMap == null) return false;
-
+		if(accountMap == null)
+			return false;
 		accountMap.put(userName , password);
-
 		return true;
 	}
 }

@@ -13,6 +13,18 @@ import java.util.Objects;
 
 public class UploadCommand extends BaseCommand {
 
+    private UploadCommand() {
+    }
+    //静态内部类创建静态的外部类实例
+    private static class UploadCommandInstance {
+        private static final UploadCommand INSTANCE = new UploadCommand();
+    }
+
+    public static UploadCommand getInstance(){
+        return UploadCommandInstance.INSTANCE;
+    }
+
+
     /**
      * @Author DMingO
      * @Description 处理文件上传指令 UPLOAD
@@ -21,7 +33,7 @@ public class UploadCommand extends BaseCommand {
      * @return void
      **/
     @Override
-    public void execute(String content, BufferedWriter writer, User user) {
+    public synchronized void execute(String content, BufferedWriter writer, User user) {
         File file = new File(AccountManager.getRootPath());
         try{
             writer.write("150 Binary data connection\r\n");
@@ -42,21 +54,20 @@ public class UploadCommand extends BaseCommand {
 
                 }
             }
-            RandomAccessFile inFile = new
-                    RandomAccessFile(oldFileName,"rw");
+            RandomAccessFile inFile = new RandomAccessFile(oldFileName,"rw");
             //开始上传
             Socket tempSocket = new Socket(user.getIpAddress(),user.getPort());
-            InputStream inSocket
-                    = tempSocket.getInputStream();
+            InputStream inputStream = tempSocket.getInputStream();
+
             byte[] byteBuffer = new byte[1024];
             int length;
 
-            while((length =inSocket.read(byteBuffer) )!= -1){
+            while((length = inputStream.read(byteBuffer) )!= -1){
                 inFile.write(byteBuffer, 0, length);
             }
             System.out.println("文件传输完毕！");
             inFile.close();
-            inSocket.close();
+            inputStream.close();
             tempSocket.close();
             //传输结束
             writer.write("226 transfer complete\r\n");

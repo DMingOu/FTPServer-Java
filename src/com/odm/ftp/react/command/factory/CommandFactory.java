@@ -12,15 +12,14 @@ import java.util.Map;
  * @Date: 2020/6/14 09:15
  * @Description: 返回对应的Command对象
  */
-public class CommandFactory {
+public final class CommandFactory {
 
-	//存储已经使用过的指令对象
+	//存储已经使用过的指令实例
 	public static Map<String , BaseCommand> commandMap = new HashMap<>();
 
 	private CommandFactory(){
 		throw new IllegalStateException("不可初始化CommandFactory实例");
 	}
-
 
 	/**
 	 * @Author DMingO
@@ -37,7 +36,7 @@ public class CommandFactory {
 			switch(command_name){
 				//处理用户登录状态
 				case CommandTable.USER :
-					command = new LoginCommand();
+					command = new UserCommand();
 					break;
 				//处理用户的密码
 				case CommandTable.PASSWORD  :
@@ -53,15 +52,15 @@ public class CommandFactory {
 					break;
 				//存储，上传到FTP服务器  put指令
 				case CommandTable.UPLOAD :
-					command = new UploadCommand();
+					command =  UploadCommand.getInstance();
 					break;
 				//从服务器目录下载文件到客户端当前目录 操作  get指令
 				case CommandTable.DOWNLOAD :
-					command = new DownloadCommand();
+					command =  DownloadCommand.getInstance();
 					break;
 				//在服务器目录上创建文件夹 mkdir file
 				case CommandTable.MAKE_DIR :
-					command = new CreateNewFileCommand();
+					command =  CreateNewFileCommand.getInstance();
 					break;
 				default:
 					break;
