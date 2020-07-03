@@ -16,7 +16,7 @@ public class AccountManager {
 	
 
 	static String fileName = "server.xml";
-	static String rootDir = "C:"+File.separator;//远程文件目录
+	static String rootDir ="C:\\Users\\ODM\\Documents\\ftp remote dir\\";//远程文件目录
 	//本地存储用户名与用户密码(MD5)
 	static HashMap<String, String> accountMap = new HashMap<>();
 

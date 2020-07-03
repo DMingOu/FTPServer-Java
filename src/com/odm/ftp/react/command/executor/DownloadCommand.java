@@ -41,7 +41,8 @@ public class DownloadCommand extends BaseCommand {
 				//获取相同文件名
 				if (item.equals(name)){
 					//新文件名为时间戳
-					File newFileName = new File(System.getProperty("user.home")+"\\"+ Calendar.getInstance().getTimeInMillis()+"."+item.substring(item.lastIndexOf(".")+1));
+					File newFileName = new File(System.getProperty("user.home")+"\\"+
+							Calendar.getInstance().getTimeInMillis()+"."+item.substring(item.lastIndexOf(".")+1));
 					if(oldFileName.renameTo(newFileName)) {
 						System.out.println(oldFileName + "successfully renameTo  " + newFileName);
 					}else {
